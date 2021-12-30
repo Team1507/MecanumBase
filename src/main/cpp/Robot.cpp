@@ -3,13 +3,24 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() 
+{
+    //*************************** INIT ******************************
+    std::cout<<"RobotInit"<<std::endl;
+    std::cout<<"FRC2021: MecanumBase Test Code"<<std::endl;
+
+    std::cout<<"Version: " << __DATE__ <<"  "<<__TIME__<<std::endl<<std::endl; 
+
+}
 
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
 }
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() 
+{
+  std::cout<<"Disabled Init"<<std::endl;
+}
 
 void Robot::DisabledPeriodic() {}
 
@@ -23,8 +34,10 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() {}
 
-void Robot::TeleopInit() {
-
+void Robot::TeleopInit() 
+{
+  std::cout<<"Teleop Init"<<std::endl;
+  
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;

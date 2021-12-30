@@ -6,7 +6,10 @@
 
 Drivetrain::Drivetrain()
 {
-
+    m_lf_motor.SetInverted(false);
+    m_lr_motor.SetInverted(true);
+    m_rf_motor.SetInverted(true);
+    m_rr_motor.SetInverted(true);
 
 }
 
@@ -21,6 +24,16 @@ void Drivetrain::Drive( float lf,  float rf,  float lr,  float rr )
     m_rf_motor.Set(rf);
     m_lr_motor.Set(lr);
     m_rr_motor.Set(rr);
+}
+
+
+void Drivetrain::TankDrive( float left,  float right )
+{
+    m_lf_motor.Set(left);    
+    m_lr_motor.Set(left);
+
+    m_rf_motor.Set(right);
+    m_rr_motor.Set(right);  
 }
 
 

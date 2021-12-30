@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdDriveWithXbox.h"
+#include "GamepadMap.h"
 
 
 
@@ -16,16 +17,22 @@ CmdDriveWithXbox::CmdDriveWithXbox(Drivetrain *drivetrain, frc::XboxController *
 }
 
 // Called when the command is initially scheduled.
-void CmdDriveWithXbox::Initialize() {}
+void CmdDriveWithXbox::Initialize() 
+{
+  std::cout<<"Starting CmdDriveWithXbox"<<std::endl;
+}
 
 // Called repeatedly when this Command is scheduled to run
 void CmdDriveWithXbox::Execute() 
 {
 
-  //Add Tyler Code Here!!!!!
-  float left_x_axis = m_xbox->GetRawAxis(0);
-  float left_y_axis = m_xbox->GetRawAxis(1);
+  float left_x_axis  = m_xbox->GetRawAxis(GAMEPADMAP_AXIS_L_X);
+  float left_y_axis  = m_xbox->GetRawAxis(GAMEPADMAP_AXIS_L_Y);
+  float right_x_axis = m_xbox->GetRawAxis(GAMEPADMAP_AXIS_R_X);
+  float right_y_axis = m_xbox->GetRawAxis(GAMEPADMAP_AXIS_R_Y);
 
+
+  m_drivetrain->TankDrive(left_y_axis,right_y_axis);
 
 }
 
