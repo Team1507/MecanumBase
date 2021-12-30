@@ -6,10 +6,11 @@
 
 Drivetrain::Drivetrain()
 {
-    m_lf_motor.SetInverted(false);
-    m_lr_motor.SetInverted(true);
-    m_rf_motor.SetInverted(true);
-    m_rr_motor.SetInverted(true);
+    //Motors are set so POSITIVE power = FORWARD motion.
+    m_lf_motor.SetInverted(true);
+    m_lr_motor.SetInverted(false);
+    m_rf_motor.SetInverted(false);
+    m_rr_motor.SetInverted(false);
 
 }
 
@@ -44,3 +45,22 @@ void Drivetrain::Stop(void)
     m_lr_motor.Set(0.0);
     m_rr_motor.Set(0.0);
 }
+
+
+
+  float Drivetrain::GetLeftFrontMotor(void)
+  {
+    return m_lf_motor.Get();
+  }
+  float Drivetrain::GetLeftRearMotor(void)
+  {
+    return m_lr_motor.Get();
+  }
+  float Drivetrain:: GetRightFrontMotor(void)
+  {
+    return m_rf_motor.Get();
+  }
+  float Drivetrain::GetRightRearMotor(void)
+  {
+    return m_rr_motor.Get();
+  }

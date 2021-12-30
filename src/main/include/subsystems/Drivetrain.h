@@ -17,6 +17,13 @@ class Drivetrain : public frc2::SubsystemBase {
   void Stop(void);
 
 
+  //The getters
+  float GetLeftFrontMotor(void);
+  float GetLeftRearMotor(void);
+  float GetRightFrontMotor(void);
+  float GetRightRearMotor(void);
+  
+
 
 
  private:

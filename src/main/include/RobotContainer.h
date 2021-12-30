@@ -17,13 +17,16 @@ class RobotContainer {
 
   frc2::Command* GetAutonomousCommand();
 
+  //We are cheating here by making these public - but we are OK with it as it ONLY allows
+  //  top level Robot object to access them to make debugging easier.
+  Drivetrain m_drivetrain;
+  frc::XboxController m_xbox{0};
+
  private:
   ExampleSubsystem m_subsystem;
   ExampleCommand m_autonomousCommand;
 
 
-  Drivetrain m_drivetrain;
-  frc::XboxController m_xbox{0};
 
 
   void ConfigureButtonBindings();
