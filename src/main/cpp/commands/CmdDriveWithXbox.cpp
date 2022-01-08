@@ -95,12 +95,28 @@ void Drive_Test2(Drivetrain *drivetrain, float l_y, float l_x, float r_x)
 
   const float DEADBAND = 0.05;
 
+// wanted power is the length between x and y 
+  float wantedPower = sqrt((l_x*l_x)) + ((l_y*l_y))/sqrt(2); //Pythagorean theorem 
+
+  if(wantedPower > 1)// This shouldn't happen
+  { 
+    wantedPower = 1.0;
+  }
+  else if((fabs(r_x) > DEADBAND) && (fabs(r_x) > wantedPower))//Gives power to rotation if it is the largest 
+  {
+    wantedPower = r_x;
+  }
+  else if(wantedPower < DEADBAND)
+  {
+    wantedPower = 0.0;
+  }
+  
+  
   //Do the math! (copied from Test1)
   float lf = (  l_x + l_y + r_x );
   float lr = ( -l_x + l_y + r_x );
   float rf = ( -l_x + l_y - r_x );
   float rr = (  l_x + l_y - r_x );
-
 
 
 
@@ -117,21 +133,12 @@ void Drive_Test2(Drivetrain *drivetrain, float l_y, float l_x, float r_x)
   {
     greatestPower = rr;
   }
-  // wanted power is the length between x and y 
-  float wantedPower = sqrt(l_x*l_x + l_y*l_y); //Pythagorean theorem 
-
-  if(wantedPower > 1)// This shouldn't happen
-  { 
-    wantedPower = 1;
-  }
-  else if((wantedPower < DEADBAND) && (r_x >= DEADBAND))//This is needed if the robot is only turning
-  {
-    wantedPower = r_x;
-  }
   
+
   //greatest * ratio = wanted
   //ratio is used to make the power on the moters equal to wanted
-  float powerRatio = wantedPower/greatestPower;
+  float powerRatio = 0;
+  if(fabs(greatestPower) > DEADBAND) powerRatio = fabs(wantedPower/greatestPower); // stops division by zero
 
   drivetrain->Drive((lf * powerRatio) , (rf * powerRatio) , (lr * powerRatio) , (rr * powerRatio));
 
