@@ -7,6 +7,7 @@
 void Drive_Tank(Drivetrain *drivetrain, float left, float right); 
 void Drive_Test1(Drivetrain *drivetrain, float l_y, float l_x, float r_x);
 void Drive_Test2(Drivetrain *drivetrain, float l_y, float l_x, float r_x);
+void Drive_Test3(Drivetrain *drivetrain, float l_y, float l_x, float r_x);
 
 CmdDriveWithXbox::CmdDriveWithXbox(Drivetrain *drivetrain, frc::XboxController *xbox ) 
 {
@@ -43,9 +44,10 @@ void CmdDriveWithXbox::Execute()
 
 
   //ONLY PICK ONE!!!!
-  //Drive_Tank(m_drivetrain, left_y_axis, right_y_axis);
-  //Drive_Test1(m_drivetrain, left_y_axis, left_x_axis, right_x_axis);
-  Drive_Test2(m_drivetrain, left_y_axis, left_x_axis, right_x_axis);
+  //Drive_Tank(m_drivetrain, left_y_axis, right_y_axis); 
+  //Drive_Test1(m_drivetrain, left_y_axis, left_x_axis, right_x_axis);    //Testing only
+  //Drive_Test2(m_drivetrain, left_y_axis, left_x_axis, right_x_axis);    //Tylers Code
+  Drive_Test3(m_drivetrain, left_y_axis, left_x_axis, right_x_axis);      //Kris' Code
  
 
 
@@ -89,6 +91,7 @@ void Drive_Test1(Drivetrain *drivetrain, float l_y, float l_x, float r_x)
 
 
 //**************************************************************
+//  Tylers code
 void Drive_Test2(Drivetrain *drivetrain, float l_y, float l_x, float r_x)
 {
 
@@ -147,3 +150,44 @@ void Drive_Test2(Drivetrain *drivetrain, float l_y, float l_x, float r_x)
   frc::SmartDashboard::PutNumber("power ratio",   powerRatio);
 
 }
+
+
+//**************************************************************
+//  Kris' code
+void Drive_Test3(Drivetrain *drivetrain, float l_y, float l_x, float r_x)
+{  
+  
+  //Do the math! (copied from Test1)
+  float lf = (  l_x + l_y + r_x );
+  float lr = ( -l_x + l_y + r_x );
+  float rf = ( -l_x + l_y - r_x );
+  float rr = (  l_x + l_y - r_x );
+
+
+  //Find the largest number greater than 1.0
+  float greatestPower = 1.00;         //Set at 1.0
+  if(fabs(greatestPower) < fabs(lf))
+  {
+    greatestPower = lr;
+  }
+  if(fabs(greatestPower) < fabs(lr))
+  {
+    greatestPower = lr;
+  }
+  if(fabs(greatestPower) < fabs(rf))
+  {
+    greatestPower = rf;
+  }
+  if(fabs(greatestPower) < fabs(rr))
+  {
+    greatestPower = rr;
+  }
+  
+
+  //Divide all powers by greatestPower to normalize to 1.0
+  drivetrain->Drive((lf/greatestPower) , (rf/greatestPower) , (lr/greatestPower) , (rr/greatestPower) );
+
+}
+
+
+
